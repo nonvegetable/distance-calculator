@@ -1,7 +1,7 @@
 from opencage.geocoder import OpenCageGeocode
 
 def api_call(place):
-    key = 'f5ea0c6a6fbb4983ba6d89d226c82513'
+    key = 'YOUR-API-KEY'
     geocoder = OpenCageGeocode(key)
 
     query = place
