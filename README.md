@@ -1,6 +1,6 @@
 # Distance Calculator
 
-This simple Python program calculates the distance between two places using the Haversine formula and the OpenCage Geocoding API.
+This simple Python program calculates the distance between two places using the Haversine formula and the OpenCage Geocoding API. (I made this program as to practice implemetation of API's)
 
 ## Prerequisites
 
