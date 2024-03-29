@@ -1,11 +1,18 @@
 from tkinter import *
+import customtkinter
 import APICall
 from DistanceCalculate import calculate_distance
 
+# Setting the theme of the app
+customtkinter.set_appearance_mode("System")
+
+# Setting up the theme of the components
+customtkinter.set_default_color_theme("blue")
 # Make a window
-root = Tk()
+root = customtkinter.CTk()
 root.title("Distance Calculator")
-root.geometry('500x500')
+root.geometry('500x200')
+root.eval('tk::PlaceWindow . center')
 
 place1_var = StringVar()
 place2_var = StringVar()
@@ -25,19 +32,20 @@ def calculateAndDisplay():
     distance = calculate_distance(coord1, coord2)
 
     # Update the label with the calculated distance
-    distance_label.config(text=f"The distance between {place1} and {place2} is {distance:.2f} kilometers.")
+    distance_label.configure(text=f"The distance between {place1} and {place2} is {distance:.2f} kilometers.")
 
 
-place1_entry = Entry(root, textvariable=place1_var)
+
+place1_entry = customtkinter.CTkEntry(root, textvariable=place1_var)
 place1_entry.pack(pady=10)
-place2_entry = Entry(root, textvariable=place2_var)
+place2_entry = customtkinter.CTkEntry(root, textvariable=place2_var)
 place2_entry.pack(pady=10)
 
-calculate_button = Button(root, text="Calculate Distance", command=calculateAndDisplay)
+calculate_button = customtkinter.CTkButton(root, text="Calculate Distance", command=calculateAndDisplay)
 calculate_button.pack(pady=10)
 
 # Label to display the distance
-distance_label = Label(root, text="")
+distance_label = customtkinter.CTkLabel(root, text="")
 distance_label.pack(pady=10)
 
 # Execute Tkinter
