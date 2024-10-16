@@ -1,52 +1,47 @@
-from tkinter import *
-import customtkinter
 import APICall
-from DistanceCalculate import calculate_distance
+from DistanceCalculate import calculate_distance, get_unit_name
 
-# Setting the theme of the app
-customtkinter.set_appearance_mode("System")
+def main():
+    print("Welcome to the Distance Calculator!")
+    
+    while True:
+        # Get input for the first place
+        place1 = input("Enter the first place: ")
+        
+        # Get input for the second place
+        place2 = input("Enter the second place: ")
+        
+        # Get input for the unit
+        unit = input("Enter the unit (km/mi/nm): ").lower()
+        
+        # Validate unit input
+        if unit not in ['km', 'mi', 'nm']:
+            print("Invalid unit. Defaulting to kilometers (km).")
+            unit = 'km'
+        
+        try:
+            # Make API calls to get coordinates
+            print("Fetching coordinates...")
+            coord1 = APICall.api_call(place1)
+            coord2 = APICall.api_call(place2)
+            
+            # Calculate the distance
+            distance = calculate_distance(coord1, coord2, unit)
+            
+            # Get the full unit name
+            unit_name = get_unit_name(unit)
+            
+            # Print the result
+            print(f"\nThe distance between {place1} and {place2} is {distance:.2f} {unit_name}.")
+        
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+        
+        # Ask if the user wants to calculate another distance
+        another = input("\nDo you want to calculate another distance? (yes/no): ").lower()
+        if another != 'yes':
+            print("Thank you for using the Distance Calculator. Goodbye!")
+            break
 
-# Setting up the theme of the components
-customtkinter.set_default_color_theme("blue")
-# Make a window
-root = customtkinter.CTk()
-root.title("Distance Calculator")
-root.geometry('500x200')
-root.eval('tk::PlaceWindow . center')
-
-place1_var = StringVar()
-place2_var = StringVar()
-
-
-# Function to calculate distance and display it
-def calculateAndDisplay():
-    # Take user inputs
-    place1 = place1_var.get()
-    place2 = place2_var.get()
-
-    # Make a call to the API to get the coordinates
-    coord1 = APICall.api_call(place1)
-    coord2 = APICall.api_call(place2)
-
-    # Calculate the distance
-    distance = calculate_distance(coord1, coord2)
-
-    # Update the label with the calculated distance
-    distance_label.configure(text=f"The distance between {place1} and {place2} is {distance:.2f} kilometers.")
-
-
-
-place1_entry = customtkinter.CTkEntry(root, textvariable=place1_var)
-place1_entry.pack(pady=10)
-place2_entry = customtkinter.CTkEntry(root, textvariable=place2_var)
-place2_entry.pack(pady=10)
-
-calculate_button = customtkinter.CTkButton(root, text="Calculate Distance", command=calculateAndDisplay)
-calculate_button.pack(pady=10)
-
-# Label to display the distance
-distance_label = customtkinter.CTkLabel(root, text="")
-distance_label.pack(pady=10)
-
-# Execute Tkinter
-root.mainloop()
+if __name__ == "__main__":
+    main()
