@@ -1,7 +1,12 @@
+from json import load
 from opencage.geocoder import OpenCageGeocode
+import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
 
 def api_call(place):
-    key = 'YOUR-API-KEY'
+    key = os.getenv("YOUR_API_KEY")
     geocoder = OpenCageGeocode(key)
 
     query = place
